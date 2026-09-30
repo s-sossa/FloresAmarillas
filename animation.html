@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flores Floreciendo 🌻 — Día de las Flores Amarillas</title>
+  <meta name="description" content="Animación de flores amarillas floreciendo para el Día de las Flores Amarillas." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+</head>
+<body>
+
+  <!-- Page reveal overlay (golden flash on enter) -->
+  <div id="page-reveal" aria-hidden="true"></div>
+
+  <!-- Background -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+  <div class="glow-orb" aria-hidden="true"></div>
+  <div class="ground" aria-hidden="true"></div>
+
+  <!-- SVG Garden -->
+  <svg id="garden" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax meet"
+       role="img" aria-label="Jardín de flores amarillas floreciendo"></svg>
+
+  <!-- Back button -->
+  <a href="index.html" class="btn-back" id="btn-back" aria-label="Volver a la página principal">
+    ← Volver
+  </a>
+
+  <!-- Top message -->
+  <header class="msg-wrap" aria-live="polite">
+    <h1>🌻 Jardín de Flores Amarillas 🌻</h1>
+    <p>Con cariño, para quienes iluminan nuestra vida</p>
+  </header>
+
+  <!-- Click hint -->
+  <p class="hint" aria-hidden="true">✨ Haz clic en el jardín para hacer florecer más flores</p>
+
+  <script type="module">
+    import { initStars, initFireflies, initFallingPetals } from './js/shared.js';
+    import { initGarden } from './js/garden.js';
+
+    initStars();
+    initFireflies(18);
+    initFallingPetals(22);
+    initGarden();
+
+    // Remove the reveal overlay after animation
+    const reveal = document.getElementById('page-reveal');
+    reveal.addEventListener('animationend', () => reveal.remove());
+  </script>
+</body>
+</html>

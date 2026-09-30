@@ -1,0 +1,102 @@
+/* ═══════════════════════════════════════════════
+   animation.css — Garden animation page styles
+   ═══════════════════════════════════════════════ */
+
+/* ── Top message ── */
+.msg-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4.5vh;
+  z-index: 10;
+  pointer-events: none;
+}
+.msg-wrap h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+  color: var(--text-gold);
+  text-shadow:
+    0 0 24px rgba(255,220,0,0.85),
+    0 2px 8px rgba(0,0,0,0.6);
+  opacity: 0;
+  animation: fadein-up 1.4s 0.3s cubic-bezier(0.34,1.4,0.64,1) forwards,
+             title-glow 3.5s 1.7s ease-in-out infinite alternate;
+}
+.msg-wrap p {
+  font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-soft);
+  margin-top: 0.4rem;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: fadein-up 1.4s 0.8s cubic-bezier(0.34,1.4,0.64,1) forwards;
+}
+
+@keyframes fadein-up {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0);     }
+}
+@keyframes title-glow {
+  from { text-shadow: 0 0 22px rgba(255,220,0,0.7), 0 2px 8px rgba(0,0,0,0.5); }
+  to   { text-shadow: 0 0 46px rgba(255,220,0,1),   0 2px 8px rgba(0,0,0,0.5); }
+}
+
+/* ── Back button ── */
+.btn-back {
+  position: fixed;
+  top: 1.4rem; left: 1.4rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: rgba(255,240,160,0.8);
+  background: rgba(255, 230, 80, 0.08);
+  border: 1px solid rgba(255,230,80,0.22);
+  border-radius: 50px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-back:hover {
+  background: rgba(255,230,80,0.18);
+  color: #ffe566;
+  transform: translateX(-2px);
+}
+
+/* ── Click hint ── */
+.hint {
+  position: fixed;
+  bottom: 1.8vh; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  color: rgba(255, 240, 160, 0.45);
+  z-index: 20;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  animation: fadein-up 1.4s 2.5s forwards;
+}
+
+/* ── Page enter animation ── */
+#page-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: radial-gradient(ellipse at center, #ffe566 0%, #f5a623 40%, #07101f 100%);
+  animation: reveal-out 0.9s 0.1s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  pointer-events: none;
+}
+@keyframes reveal-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}

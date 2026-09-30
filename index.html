@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día de las Flores Amarillas 🌻</title>
+  <meta name="description" content="Celebra el Día de las Flores Amarillas — regala amor con flores a quienes más quieres." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+
+  <!-- Background elements -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+  <div class="glow-orb" aria-hidden="true"></div>
+  <div class="ground" aria-hidden="true"></div>
+  <svg id="garden" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg>
+
+  <!-- Transition overlay (flash effect when navigating) -->
+  <div id="transition-overlay" aria-hidden="true"></div>
+
+  <!-- Hero card -->
+  <main class="hero" id="hero">
+    <div class="card">
+      <span class="card-icon" aria-hidden="true">🌻</span>
+
+      <h1>Feliz Día de las<br />Flores Amarillas</h1>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <p>
+        Hoy es el día de regalar flores a alguien muy querido.<br />
+        Que la alegría florezca en tu corazón y en el de quienes amas.
+      </p>
+
+      <button class="btn-bloom" id="btn-bloom" aria-label="Ver la animación de flores floreciendo">
+        <span class="btn-icon" aria-hidden="true">🌸</span>
+        Ver las flores florecer
+      </button>
+
+      <p class="btn-hint">¡Haz clic y disfruta el jardín!</p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initStars, initFireflies, initFallingPetals } from './js/shared.js';
+    import { initGarden } from './js/garden.js';
+
+    // Boot background effects
+    initStars();
+    initFireflies(12);
+    initFallingPetals(14);
+    initGarden();
+
+    // Navigate to animation page with a golden flash transition
+    document.getElementById('btn-bloom').addEventListener('click', () => {
+      const overlay = document.getElementById('transition-overlay');
+      overlay.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'animation.html';
+      }, 650);
+    });
+  </script>
+</body>
+</html>

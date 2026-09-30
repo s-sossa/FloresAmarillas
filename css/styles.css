@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════
+   Día de las Flores Amarillas — Shared Styles
+   ═══════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lato:ital,wght@0,300;0,400;1,300&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --sky-top:    #07101f;
+  --sky-mid:    #121e38;
+  --sky-bot:    #1e3558;
+  --ground-top: #1a4212;
+  --ground-bot: #0e2509;
+  --gold:       #f5c518;
+  --amber:      #e8a000;
+  --petal-lt:   #ffe066;
+  --petal-dk:   #e6960a;
+  --stem:       #3a7d2c;
+  --leaf:       #4caf50;
+  --text-gold:  #ffe566;
+  --text-soft:  rgba(255, 240, 180, 0.85);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+}
+
+body {
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 45%,
+    var(--sky-bot) 72%,
+    #1b3a1a 100%
+  );
+}
+
+/* ── Stars canvas ── */
+#stars-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 65%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Moon orb ── */
+.glow-orb {
+  position: fixed;
+  top: 7vh; right: 8vw;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffae0 0%, #ffe566 38%, transparent 68%);
+  box-shadow:
+    0 0 50px 25px rgba(255, 230, 80, 0.20),
+    0 0 110px 55px rgba(255, 200, 0, 0.09);
+  animation: orb-pulse 4.5s ease-in-out infinite alternate;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes orb-pulse {
+  from { opacity: 0.72; transform: scale(1); }
+  to   { opacity: 1;    transform: scale(1.09); }
+}
+
+/* ── Ground ── */
+.ground {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%; height: 20vh;
+  background: linear-gradient(180deg, var(--ground-top) 0%, var(--ground-bot) 100%);
+  border-radius: 55% 55% 0 0 / 28px 28px 0 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Fireflies ── */
+.firefly {
+  position: fixed;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #ffe066;
+  box-shadow: 0 0 8px 3px rgba(255, 230, 80, 0.7);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Falling petals ── */
+.falling-petal {
+  position: fixed;
+  top: -30px;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, #ffe066, #f5a623);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 6;
+  animation: fall-petal linear infinite;
+}
+@keyframes fall-petal {
+  0%   { opacity: 0;   transform: rotate(0deg)   translateY(0); }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.5; }
+  100% { opacity: 0;   transform: rotate(720deg) translateY(110vh); }
+}
+
+/* ── SVG Garden ── */
+#garden {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%; height: 90vh;
+  z-index: 3;
+}
+
+/* ── Flower animations ── */
+.flower-group {
+  transform-origin: center bottom;
+  animation: bloom-in 1.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes bloom-in {
+  from { transform: scale(0) rotate(-12deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);  opacity: 1; }
+}
+.petal {
+  animation: petal-wave 3.2s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}
+@keyframes petal-wave {
+  0%   { transform: rotate(0deg)  scaleX(1);    }
+  50%  { transform: rotate(3deg)  scaleX(1.05); }
+  100% { transform: rotate(-3deg) scaleX(0.96); }
+}
+.center-dot { animation: center-pulse 2.6s ease-in-out infinite alternate; }
+@keyframes center-pulse {
+  from { opacity: 0.88; }
+  to   { opacity: 1;    }
+}
+
+/* ── Shared utility ── */
+.visually-hidden { display: none; }
