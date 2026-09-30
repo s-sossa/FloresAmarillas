@@ -34,7 +34,7 @@
   </header>
 
   <!-- Click hint -->
-  <p class="hint" aria-hidden="true">✨ Haz clic en el jardín para hacer florecer más flores</p>
+  <p class="hint" id="hint-text" aria-hidden="true">✨ Haz clic en el jardín para hacer florecer más flores</p>
 
   <script type="module">
     import { initStars, initFireflies, initFallingPetals } from './js/shared.js';
@@ -48,6 +48,12 @@
     // Remove the reveal overlay after animation
     const reveal = document.getElementById('page-reveal');
     reveal.addEventListener('animationend', () => reveal.remove());
+
+    // Adapt hint text for touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      const hint = document.getElementById('hint-text');
+      if (hint) hint.textContent = '✨ Toca el jardín para hacer florecer más flores';
+    }
   </script>
 </body>
 </html>

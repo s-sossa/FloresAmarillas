@@ -40,14 +40,20 @@ export function initStars() {
 
 /* ── Fireflies ───────────────────────────────────────────────── */
 export function initFireflies(count = 18) {
-  for (let i = 0; i < count; i++) {
+  const isMobile = window.innerWidth <= 480;
+  const actualCount = isMobile ? Math.min(count, 8) : count;
+  // On mobile keep fireflies in upper half to not clash with card
+  const yMin = isMobile ? 10 : 28;
+  const yMax = isMobile ? 55 : 76;
+
+  for (let i = 0; i < actualCount; i++) {
     const ff   = document.createElement('div');
     ff.className = 'firefly';
     const dur  = 7 + Math.random() * 9;
     const x1   = (Math.random() * 85 + 5).toFixed(1);
-    const y1   = (28 + Math.random() * 48).toFixed(1);
+    const y1   = (yMin + Math.random() * (yMax - yMin)).toFixed(1);
     const x2   = (Math.random() * 85 + 5).toFixed(1);
-    const y2   = (28 + Math.random() * 48).toFixed(1);
+    const y2   = (yMin + Math.random() * (yMax - yMin)).toFixed(1);
 
     const styleEl = document.createElement('style');
     styleEl.textContent = `
@@ -68,7 +74,10 @@ export function initFireflies(count = 18) {
 
 /* ── Falling petals ──────────────────────────────────────────── */
 export function initFallingPetals(count = 22) {
-  for (let i = 0; i < count; i++) {
+  const isMobile = window.innerWidth <= 480;
+  const actualCount = isMobile ? Math.min(count, 10) : count;
+
+  for (let i = 0; i < actualCount; i++) {
     const fp  = document.createElement('div');
     fp.className = 'falling-petal';
     const dur = (7 + Math.random() * 8).toFixed(1);

@@ -100,3 +100,90 @@
   from { opacity: 1; }
   to   { opacity: 0; }
 }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — Animation page
+   ═══════════════════════════════════════════════ */
+
+/* Phones (≤ 480px) */
+@media (max-width: 480px) {
+  .msg-wrap {
+    padding-top: 2vh;
+  }
+
+  .msg-wrap h1 {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .msg-wrap p {
+    font-size: clamp(0.75rem, 3vw, 0.95rem);
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .btn-back {
+    top: 0.8rem;
+    left: 0.8rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.75rem;
+  }
+
+  .hint {
+    font-size: 0.68rem;
+    bottom: 1.2vh;
+    white-space: normal;
+    text-align: center;
+    width: 90%;
+    left: 5%;
+    transform: none;
+  }
+}
+
+/* Tablets (481px – 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .msg-wrap {
+    padding-top: 3vh;
+  }
+
+  .msg-wrap h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+  }
+
+  .btn-back {
+    top: 1rem;
+    left: 1rem;
+  }
+}
+
+/* Landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .msg-wrap {
+    padding-top: 0.5vh;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .msg-wrap h1 {
+    font-size: 1.2rem;
+  }
+
+  .msg-wrap p {
+    display: none;
+  }
+
+  .btn-back {
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .hint {
+    bottom: 0.5vh;
+    font-size: 0.65rem;
+  }
+}

@@ -137,8 +137,12 @@ export function initGarden() {
   const VW = 1200, VH = 700;
   const groundY = VH;
 
+  const isMobile = window.innerWidth <= 480;
+  const isTablet = window.innerWidth > 480 && window.innerWidth <= 768;
+
   // [x, stemH, size, delay]
-  const configs = [
+  // Desktop: full 14-flower layout
+  const desktopConfigs = [
     [70,  130, 38, 0.2],
     [170, 162, 46, 0.5],
     [300, 108, 32, 0.8],
@@ -155,20 +159,64 @@ export function initGarden() {
     [898, 102, 29, 1.1],
   ];
 
+  // Mobile: fewer, wider-spaced flowers sized for narrow viewports
+  const mobileConfigs = [
+    [100, 110, 30, 0.2],
+    [290, 148, 38, 0.5],
+    [500, 130, 34, 0.8],
+    [710, 160, 40, 0.3],
+    [920, 120, 32, 0.6],
+    [1100,108, 28, 1.0],
+  ];
+
+  // Tablet: slightly reduced set
+  const tabletConfigs = [
+    [80,  130, 34, 0.2],
+    [220, 155, 42, 0.5],
+    [390, 108, 30, 0.8],
+    [560, 175, 48, 0.3],
+    [720, 140, 38, 0.6],
+    [880, 124, 35, 1.0],
+    [1040,160, 44, 0.4],
+    [1150,118, 30, 0.9],
+  ];
+
+  const configs = isMobile ? mobileConfigs : isTablet ? tabletConfigs : desktopConfigs;
+
   configs.forEach(([x, stemH, size, delay]) => {
     svg.appendChild(makeFlower(x, groundY, stemH, size, delay));
   });
 
-  // Click to bloom new flowers
+  // Click to bloom new flowers — scale flower size to screen width
   svg.addEventListener('click', (e) => {
     const rect   = svg.getBoundingClientRect();
     const scaleX = VW / rect.width;
     const cx     = (e.clientX - rect.left) * scaleX;
-    const stemH  = 80 + Math.random() * 120;
-    const size   = 28 + Math.random() * 30;
+    const sizeScale = Math.min(1, window.innerWidth / 900);
+    const stemH  = (80 + Math.random() * 120) * (0.7 + sizeScale * 0.3);
+    const size   = (28 + Math.random() * 30) * (0.65 + sizeScale * 0.35);
     svg.appendChild(makeFlower(cx, groundY, stemH, size, 0));
 
     // Import burst dynamically to avoid circular deps
     import('./shared.js').then(({ burstPetals }) => burstPetals(e.clientX, e.clientY));
+  });
+
+  // Re-draw on orientation change / resize (debounced)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Clear and re-init only if device category changed
+      const nowMobile = window.innerWidth <= 480;
+      const nowTablet = window.innerWidth > 480 && window.innerWidth <= 768;
+      if (nowMobile !== isMobile || nowTablet !== isTablet) {
+        // Remove all flower groups and re-seed
+        svg.querySelectorAll('.flower-group').forEach(el => el.remove());
+        const newCfg = nowMobile ? mobileConfigs : nowTablet ? tabletConfigs : desktopConfigs;
+        newCfg.forEach(([x, stemH, size, delay]) => {
+          svg.appendChild(makeFlower(x, groundY, stemH, size, delay));
+        });
+      }
+    }, 300);
   });
 }
